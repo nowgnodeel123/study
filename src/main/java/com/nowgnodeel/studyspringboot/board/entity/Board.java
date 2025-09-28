@@ -1,5 +1,6 @@
 package com.nowgnodeel.studyspringboot.board.entity;
 
+import com.nowgnodeel.studyspringboot.board.dto.CreateBoardRequestDto;
 import com.nowgnodeel.studyspringboot.global.entity.Timestamped;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,4 +24,11 @@ public class Board extends Timestamped {
 
     @Column(nullable = false)
     private String content;
+
+    public static Board toEntity(CreateBoardRequestDto requestDto) {
+        return Board.builder()
+                .title(requestDto.title())
+                .content(requestDto.content())
+                .build();
+    }
 }
