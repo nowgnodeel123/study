@@ -1,6 +1,7 @@
 package com.nowgnodeel.studyspringboot.board.service;
 
 import com.nowgnodeel.studyspringboot.board.dto.CreateBoardRequestDto;
+import com.nowgnodeel.studyspringboot.board.dto.ModifyBoardRequestDto;
 import com.nowgnodeel.studyspringboot.board.entity.Board;
 import com.nowgnodeel.studyspringboot.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,13 @@ public class BoardService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         }
         boardRepository.deleteById(boardId);
+    }
+
+    @Transactional
+    public Board modifyBoard(Long boardId, ModifyBoardRequestDto requestDto) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found"));
+        board.patch(requestDto);
+        return boardRepository.save(board);
     }
 }
