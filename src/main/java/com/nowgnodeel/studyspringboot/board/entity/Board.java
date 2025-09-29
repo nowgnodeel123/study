@@ -1,6 +1,7 @@
 package com.nowgnodeel.studyspringboot.board.entity;
 
 import com.nowgnodeel.studyspringboot.board.dto.CreateBoardRequestDto;
+import com.nowgnodeel.studyspringboot.board.dto.ModifyBoardRequestDto;
 import com.nowgnodeel.studyspringboot.global.entity.Timestamped;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,5 +31,10 @@ public class Board extends Timestamped {
                 .title(requestDto.title())
                 .content(requestDto.content())
                 .build();
+    }
+
+    public void patch(ModifyBoardRequestDto requestDto) {
+        this.title = requestDto.title();
+        this.content = requestDto.content();
     }
 }
