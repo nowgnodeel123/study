@@ -2,6 +2,8 @@ package com.nowgnodeel.studyspringboot.board.controller;
 
 import com.nowgnodeel.studyspringboot.board.dto.CreateBoardRequestDto;
 import com.nowgnodeel.studyspringboot.board.dto.CreateBoardResponseDto;
+import com.nowgnodeel.studyspringboot.board.dto.ModifyBoardRequestDto;
+import com.nowgnodeel.studyspringboot.board.dto.ModifyBoardResponseDto;
 import com.nowgnodeel.studyspringboot.board.entity.Board;
 import com.nowgnodeel.studyspringboot.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +31,12 @@ public class BoardController {
     public ResponseEntity<Void> deleteBoard(@PathVariable Long boardId) {
         boardService.deleteBoard(boardId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{boardId}/modify")
+    public ResponseEntity<ModifyBoardResponseDto> modifyBoard(@PathVariable Long boardId, @RequestBody ModifyBoardRequestDto requestDto) {
+        Board board = boardService.modifyBoard(boardId, requestDto);
+        ModifyBoardResponseDto responseDto = ModifyBoardResponseDto.toDto(board);
+        return ResponseEntity.ok(responseDto);
     }
 }
