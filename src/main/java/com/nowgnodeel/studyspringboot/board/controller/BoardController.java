@@ -6,10 +6,7 @@ import com.nowgnodeel.studyspringboot.board.entity.Board;
 import com.nowgnodeel.studyspringboot.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -26,5 +23,11 @@ public class BoardController {
         CreateBoardResponseDto responseDto = CreateBoardResponseDto.toDto(board);
         URI location = URI.create("/boards/" + board.getId());
         return ResponseEntity.created(location).body(responseDto);
+    }
+
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity<Void> deleteBoard(@PathVariable Long boardId) {
+        boardService.deleteBoard(boardId);
+        return ResponseEntity.noContent().build();
     }
 }
