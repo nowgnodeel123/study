@@ -26,6 +26,10 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     public static Board toEntity(CreateBoardRequestDto requestDto) {
         return Board.builder()
                 .title(requestDto.title())
