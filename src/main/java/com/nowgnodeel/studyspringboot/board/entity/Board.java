@@ -34,11 +34,13 @@ public class Board extends Timestamped {
         return Board.builder()
                 .title(requestDto.title())
                 .content(requestDto.content())
+                .category(requestDto.category())
                 .build();
     }
 
     public void patch(ModifyBoardRequestDto requestDto) {
         this.title = requestDto.title();
         this.content = requestDto.content();
+        this.category = requestDto.category();
     }
 }
