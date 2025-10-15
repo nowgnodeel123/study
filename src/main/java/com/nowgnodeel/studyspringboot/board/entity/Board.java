@@ -2,12 +2,16 @@ package com.nowgnodeel.studyspringboot.board.entity;
 
 import com.nowgnodeel.studyspringboot.board.dto.CreateBoardRequestDto;
 import com.nowgnodeel.studyspringboot.board.dto.ModifyBoardRequestDto;
+import com.nowgnodeel.studyspringboot.comment.entity.Comment;
 import com.nowgnodeel.studyspringboot.global.entity.Timestamped;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +33,9 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments = new ArrayList<>();
 
     public static Board toEntity(CreateBoardRequestDto requestDto) {
         return Board.builder()

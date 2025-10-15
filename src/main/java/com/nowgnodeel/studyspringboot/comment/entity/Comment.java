@@ -1,5 +1,6 @@
 package com.nowgnodeel.studyspringboot.comment.entity;
 
+import com.nowgnodeel.studyspringboot.board.entity.Board;
 import com.nowgnodeel.studyspringboot.global.entity.Timestamped;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,4 +21,8 @@ public class Comment extends Timestamped {
 
     @Column(nullable = false)
     private String comment;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id", nullable = false)
+    private Board board;
 }
