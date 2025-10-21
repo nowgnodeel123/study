@@ -12,16 +12,16 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/comments")
+@RequestMapping("/api")
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/{boardId}")
+    @PostMapping("/boards/{boardId}/comments")
     public ResponseEntity<CreateCommentResponseDto> createComment(@PathVariable("boardId") Long boardId, @RequestBody CreateCommentRequestDto requestDto) {
         Comment comment = commentService.createComment(boardId, requestDto);
         CreateCommentResponseDto responseDto = CreateCommentResponseDto.toDto(comment);
-        URI location = URI.create("/comments/" + comment.getId());
+        URI location = URI.create(String.format("/api/boards/%d/comments/%d", boardId, comment.getId()));
         return ResponseEntity.created(location).body(responseDto);
     }
 }
