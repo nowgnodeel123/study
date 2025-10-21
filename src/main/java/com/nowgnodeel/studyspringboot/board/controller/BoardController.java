@@ -14,33 +14,33 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/boards")
+@RequestMapping("/api")
 public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("/write")
+    @PostMapping("/boards/write")
     public ResponseEntity<CreateBoardResponseDto> createBoard(@RequestBody CreateBoardRequestDto requestDto) {
         Board board = boardService.createBoard(requestDto);
         CreateBoardResponseDto responseDto = CreateBoardResponseDto.toDto(board);
-        URI location = URI.create("/boards/" + board.getId());
+        URI location = URI.create("/api/boards/" + board.getId());
         return ResponseEntity.created(location).body(responseDto);
     }
 
-    @DeleteMapping("/{boardId}")
+    @DeleteMapping("/boards/{boardId}")
     public ResponseEntity<Void> deleteBoard(@PathVariable Long boardId) {
         boardService.deleteBoard(boardId);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{boardId}/modify")
+    @PatchMapping("/boards/{boardId}/modify")
     public ResponseEntity<ModifyBoardResponseDto> modifyBoard(@PathVariable Long boardId, @RequestBody ModifyBoardRequestDto requestDto) {
         Board board = boardService.modifyBoard(boardId, requestDto);
         ModifyBoardResponseDto responseDto = ModifyBoardResponseDto.toDto(board);
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping
+    @GetMapping("/boards")
     public ResponseEntity<Page<GetBoardListResponseDto>> getBoardList(@PageableDefault Pageable pageable) {
         Page<Board> boardList = boardService.getBoardList(pageable);
         Page<GetBoardListResponseDto> responseDto = GetBoardListResponseDto.toDto(boardList);
