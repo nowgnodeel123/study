@@ -1,5 +1,6 @@
 package com.nowgnodeel.studyspringboot.comment.service;
 
+import com.nowgnodeel.studyspringboot.board.entity.Board;
 import com.nowgnodeel.studyspringboot.board.repository.BoardRepository;
 import com.nowgnodeel.studyspringboot.comment.dto.CreateCommentRequestDto;
 import com.nowgnodeel.studyspringboot.comment.entity.Comment;
@@ -19,10 +20,8 @@ public class CommentService {
 
     @Transactional
     public Comment createComment(Long boardId, CreateCommentRequestDto requestDto) {
-        if (!boardRepository.existsById(boardId)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Board not found");
-        }
-        Comment comment = Comment.toEntity(requestDto);
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Board not found"));
+        Comment comment = Comment.toEntity(requestDto, board);
         return commentRepository.save(comment);
     }
 }
