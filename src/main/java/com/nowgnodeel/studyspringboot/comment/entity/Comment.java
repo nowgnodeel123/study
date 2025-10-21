@@ -27,9 +27,10 @@ public class Comment extends Timestamped {
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
 
-    public static Comment toEntity(CreateCommentRequestDto requestDto) {
+    public static Comment toEntity(CreateCommentRequestDto requestDto, Board board) {
         return Comment.builder()
                 .content(requestDto.content())
+                .board(board)
                 .build();
     }
 }
