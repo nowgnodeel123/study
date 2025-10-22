@@ -24,4 +24,14 @@ public class CommentService {
         Comment comment = Comment.toEntity(requestDto, board);
         return commentRepository.save(comment);
     }
+
+    @Transactional
+    public void deleteComment(Long boardId, Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found"));
+        if (!comment.getBoard().getId().equals(boardId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Comment does not belong to the board");
+        }
+        commentRepository.delete(comment);
+    }
 }
