@@ -24,4 +24,10 @@ public class CommentController {
         URI location = URI.create(String.format("/api/boards/%d/comments/%d", boardId, comment.getId()));
         return ResponseEntity.created(location).body(responseDto);
     }
+
+    @DeleteMapping("/boards/{boardId}/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable("boardId") Long boardId, @PathVariable("commentId") Long commentId) {
+        commentService.deleteComment(boardId, commentId);
+        return ResponseEntity.noContent().build();
+    }
 }
